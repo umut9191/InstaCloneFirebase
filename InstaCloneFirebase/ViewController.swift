@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ViewController: UIViewController {
 
@@ -22,6 +23,26 @@ class ViewController: UIViewController {
     }
     
     @IBAction func SignUpButtonPressed(_ sender: UIButton) {
+        //firebase create new user
+        if txtEmail.text != "" && txtPassword.text != ""  {
+            Auth.auth().createUser(withEmail: txtEmail.text!, password: txtPassword.text!) { (authData, error) in
+                if error != nil {
+                    self.callAlert(title: "Error", message: error?.localizedDescription ?? "error")
+                }else {
+                    self.performSegue(withIdentifier: "toFeedVC", sender: nil)
+                }
+            }
+        }
+        else {
+            callAlert(title: "Error", message: "username and password can not be empty!")
+        }
+    }
+    
+    func callAlert(title:String,message:String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        let button = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
+        alert.addAction(button)
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
