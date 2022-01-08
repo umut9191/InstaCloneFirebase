@@ -19,7 +19,19 @@ class ViewController: UIViewController {
 
 
     @IBAction func signInButonPressed(_ sender: UIButton) {
-        performSegue(withIdentifier: "toFeedVC", sender: nil)
+        //firebase sign in user
+        if txtEmail.text != "" && txtPassword.text != ""  {
+            Auth.auth().signIn(withEmail: txtEmail.text!, password: txtPassword.text!) { (authData, error) in
+                if error != nil {
+                    self.callAlert(title: "Error", message: error?.localizedDescription ?? "error")
+                }else {
+                    self.performSegue(withIdentifier: "toFeedVC", sender: nil)
+                }
+            }
+        }
+        else {
+            callAlert(title: "Error", message: "username and password can not be empty!")
+        }
     }
     
     @IBAction func SignUpButtonPressed(_ sender: UIButton) {
