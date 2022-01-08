@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SettingsViewController: UIViewController {
 
@@ -16,7 +17,20 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func logoutButonPressed(_ sender: UIButton) {
+        do {
+            try Auth.auth().signOut()
+        } catch  {
+            callAlert(title: "Error", message: error.localizedDescription)
+        }
+        
+        
         performSegue(withIdentifier: "toFirstVC", sender: nil)
+    }
+    func callAlert(title:String,message:String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        let button = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
+        alert.addAction(button)
+        self.present(alert, animated: true, completion: nil)
     }
 
 }
