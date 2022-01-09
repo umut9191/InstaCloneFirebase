@@ -55,6 +55,24 @@ class UploadViewController: UIViewController,UIImagePickerControllerDelegate,UIN
                             let imageUrl = url?.absoluteString
                            // print(imageUrl!)
                             //database;
+                            //FireStore is more powerfull than realtime database
+                            
+                            let fireStoreDatabase = Firestore.firestore()
+                            var fireStorereference : DocumentReference? = nil
+                            
+                            let fireStorePost = ["imageUrl" : imageUrl!,"postedBy": Auth.auth().currentUser!.email,"postComment":self.txtComment!.text,"date":FieldValue.serverTimestamp(),"likes":0] as [String:Any]
+                            fireStorereference = fireStoreDatabase.collection("Posts").addDocument(data: fireStorePost, completion: { (errorFireStore) in
+                                if errorFireStore != nil{
+                                    self.callAlert(title: "Error", message: errorFireStore?.localizedDescription ?? " ")
+                                }else{
+                                    //image and post record success ;
+                                    //upload tool reset;
+                                    self.uploadingImageView.image = UIImage(named: "selectImage")
+                                    self.txtComment.text = ""
+                                    //0: feed, 1 :upload , 2: settings right now
+                                    self.tabBarController?.selectedIndex = 0
+                                }
+                            })
                             
                         }
                     }
