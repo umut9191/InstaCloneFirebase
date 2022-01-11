@@ -1,0 +1,17 @@
+//
+//  PostedModel.swift
+//  InstaCloneFirebase
+//
+//  Created by Mac on 11.01.2022.
+//
+
+import Foundation
+
+struct PostedModel {
+    var postedBy:String
+    var postComment:String
+    var likes:Int
+   // var date:Date
+    var imageUrl:String
+    
+}
