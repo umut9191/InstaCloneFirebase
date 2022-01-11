@@ -29,7 +29,7 @@ class FeedViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 //        settings.areTimestampsInSnapshotsEnabled = true
 //        fireStoreDatabase.settings = settings
         //
-        fireStoreDatabase.collection("Posts").addSnapshotListener { (snapshot, error) in
+        fireStoreDatabase.collection("Posts").order(by: "date", descending: true).addSnapshotListener { (snapshot, error) in
             if error != nil {
                 self.callAlert(title: "Error", message: error?.localizedDescription ?? " ")
             }else{
