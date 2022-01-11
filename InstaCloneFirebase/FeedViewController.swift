@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import SDWebImage
 
 class FeedViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
@@ -33,6 +34,8 @@ class FeedViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 self.callAlert(title: "Error", message: error?.localizedDescription ?? " ")
             }else{
                 if snapshot?.isEmpty != true || snapshot != nil{
+                    // clear array;
+                    self.postedDatas.removeAll(keepingCapacity: false)
                     for docs in   snapshot!.documents {
                       // var posted=PostedModel()
                         //let docId = docs.documentID
@@ -61,7 +64,8 @@ class FeedViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         cell.txtUserEmail.text = postedDatas[indexPath.row].postedBy
         cell.txtComment.text = postedDatas[indexPath.row].postComment
         cell.txtLikeCount.text = String(postedDatas[indexPath.row].likes)
-        cell.userImage.image = UIImage(named: "selectImage")
+            //sd web image red image from internet
+            cell.userImage.sd_setImage(with:URL(string: self.postedDatas[indexPath.row].imageUrl))   //.image = UIImage(named: "selectImage")
         }
 
         return cell
