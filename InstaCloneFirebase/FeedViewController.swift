@@ -38,7 +38,7 @@ class FeedViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     self.postedDatas.removeAll(keepingCapacity: false)
                     for docs in   snapshot!.documents {
                       // var posted=PostedModel()
-                        //let docId = docs.documentID
+                        let docId = docs.documentID
                         //print(docId)
                         if let postedBy = docs.get("postedBy") as? String ,let postedComment = docs.get("postComment") as? String ,let imageUrl = docs.get("imageUrl") as? String, let likes = docs.get("likes") as? Int{
                            // ,let date = docs.get("date") as? Date
@@ -47,7 +47,7 @@ class FeedViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 //                            posted.postComment = postedComment
 //                            posted.imageUrl = imageUrl
 //                            posted.date = date
-                            self.postedDatas.append(PostedModel(postedBy: postedBy, postComment: postedComment, likes: likes,imageUrl: imageUrl))
+                            self.postedDatas.append(PostedModel(docId:docId,postedBy: postedBy, postComment: postedComment, likes: likes,imageUrl: imageUrl))
                         }
                     
                     }
@@ -64,6 +64,7 @@ class FeedViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         cell.txtUserEmail.text = postedDatas[indexPath.row].postedBy
         cell.txtComment.text = postedDatas[indexPath.row].postComment
         cell.txtLikeCount.text = String(postedDatas[indexPath.row].likes)
+        cell.txtDocIdFireStore.text = postedDatas[indexPath.row].docId
             //sd web image red image from internet
             cell.userImage.sd_setImage(with:URL(string: self.postedDatas[indexPath.row].imageUrl))   //.image = UIImage(named: "selectImage")
         }

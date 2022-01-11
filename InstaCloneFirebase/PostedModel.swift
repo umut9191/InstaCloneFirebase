@@ -8,6 +8,7 @@
 import Foundation
 
 struct PostedModel {
+    var docId:String
     var postedBy:String
     var postComment:String
     var likes:Int
